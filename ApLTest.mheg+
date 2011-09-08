@@ -1,0 +1,30 @@
+{:Scene ('/ApLTest.asn' 0)
+	
+	:Items
+	(	
+		{:Text txtMessage :OrigContent 'MHEG ApL Test Scene=0d=0dPress OK to execute ApL' :OrigBoxSize 720 50 :OrigPosition 0 100 :HJustification Centre}
+		
+		{:BooleanVar boolApLSuccess :OrigValue False}
+		
+		{:Link lnkExecuteApL
+			:EventSource 0
+			:EventType UserInput
+			:EventData KeySelect
+			:LinkEffect
+			(
+				:Call
+				(
+					app#prgApplicationLaunch
+					app#boolResult
+					"http://www.google.co.uk"
+					"q" "MHEG ApL test succeeded!"
+					:IndirectRef boolApLSuccess
+				)
+			)
+		}
+		
+	)
+	
+	:InputEventReg 4
+	:SceneCS 720 576
+}

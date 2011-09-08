@@ -1,0 +1,22 @@
+{:Application "/a"
+	:Items 
+	(
+		{:BooleanVar boolResult :Shared True :OrigValue False}
+		{:ResidentPrg prgApplicationLaunch :InitiallyActive False :Shared True :Name 'ApL'}
+		
+		{:Link lnkStart
+			:Shared True
+			:EventSource 0
+			:EventType IsRunning
+			:LinkEffect
+			(
+				:TransitionTo(("/ApLTest.asn" 0))
+			)
+		}
+	)
+  	:FontAttributes		"plain.24.24.0"
+ 	:BitmapCHook		4
+ 	:TextCHook			10
+}
+
+	
