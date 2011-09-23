@@ -14,6 +14,25 @@
 				:TransitionTo(("/ApLTest.asn" 0))
 			)
 		}
+		
+		{:Stream BCStream
+			:CHook StreamCHook
+			:OrigContent :ContentRef('rec://svc/cur')
+			:Shared True
+			:Multiplex
+			(
+				{:Audio audBCAudio    :ComponentTag -1}
+				// The order of these must not be changed:
+				{:Video vdoBCVideo    :OrigBoxSize 720 576 :ComponentTag -1} // MUST BE -1 (autodetect) TO SUPPORT HD
+				{:Audio audAlternate1 :InitiallyActive False :ComponentTag 51}
+				{:Audio audAlternate2 :InitiallyActive False :ComponentTag 52}
+				{:Audio audAlternate3 :InitiallyActive False :ComponentTag 53}
+				{:Audio audAlternate4 :InitiallyActive False :ComponentTag 54}
+				{:Audio audAlternate5 :InitiallyActive False :ComponentTag 55}
+				{:Audio audAlternate6 :InitiallyActive False :ComponentTag 56}
+			)
+		}
+		
 	)
   	:FontAttributes		"plain.24.24.0"
  	:BitmapCHook		4

@@ -1,3 +1,33 @@
 
 This is a test MHEG application for testing the new ApL resident program.
 
+Edit URL.txt to change the URL the ApL function uses.
+
+Can just be a URL (On first line of file with a carriage return: 0x0a) or a URL and a key value pair on the next two lines E.G:
+
+Example file 1: (The dashes indicate file start/stop, they are not to be included!)
+-------------------------------
+http://www.google.com
+
+-------------------------------
+
+Example file 2:
+-------------------------------
+http://www.google.com
+q
+Hello world
+
+-------------------------------
+
+
+Anything after line 3 will be ignored so can keep test URLs there as a scratch pad if you wish.
+
+Example file 3:
+-------------------------------
+http://www.google.com
+q
+Hello world
+
+http://www.ThisURLWillBeIgnored!.com
+-------------------------------
+

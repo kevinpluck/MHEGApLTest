@@ -29,7 +29,7 @@
 					app#prgSearchExtractString
 					app#boolResult
 					:IndirectRef strURLFile
-					0
+					1
 					'=0a'
 					:IndirectRef strURL
 					:IndirectRef intFoundPos
