@@ -3,6 +3,7 @@
 	(
 		{:BooleanVar boolResult :Shared True :OrigValue False}
 		{:ResidentPrg prgApplicationLaunch :InitiallyActive False :Shared True :Name 'ApL'}
+		{:ResidentPrg prgSearchExtractString :InitiallyActive False :Shared True :Name 'SES'}
 		
 		{:Link lnkStart
 			:Shared True

@@ -3,8 +3,85 @@
 	:Items
 	(	
 		{:Text txtMessage :OrigContent 'MHEG ApL Test Scene=0d=0dPress OK to execute ApL' :OrigBoxSize 720 50 :OrigPosition 0 100 :HJustification Centre}
+		{:Text txtDestination :OrigContent '' :OrigBoxSize 720 50 :OrigPosition 0 200 :HJustification Centre}
+		
+		{:Text txtURLFile :OrigContent :ContentRef("URL.txt") :OrigBoxSize 0 0}
+		
 		
 		{:BooleanVar boolApLSuccess :OrigValue False}
+		
+		{:OStringVar strURLFile :OrigValue ""}
+		{:OStringVar strURL :OrigValue ""}
+		{:OStringVar strKey :OrigValue ""}
+		{:OStringVar strValue :OrigValue ""}
+		{:OStringVar strDestination :OrigValue ""}
+		{:IntegerVar intFoundPos :OrigValue 0}
+		
+		{:Link lnkURLLoaded
+			:EventSource txtURLFile
+			:EventType ContentAvailable
+			:LinkEffect
+			(
+				:GetTextData(txtURLFile strURLFile)
+				
+				:Call
+				(
+					app#prgSearchExtractString
+					app#boolResult
+					:IndirectRef strURLFile
+					0
+					'=0a'
+					:IndirectRef strURL
+					:IndirectRef intFoundPos
+				)
+				
+				:Call
+				(
+					app#prgSearchExtractString
+					app#boolResult
+					:IndirectRef strURLFile
+					:IndirectRef intFoundPos
+					'=0a'
+					:IndirectRef strKey
+					:IndirectRef intFoundPos
+				)
+				
+				:Call
+				(
+					app#prgSearchExtractString
+					app#boolResult
+					:IndirectRef strURLFile
+					:IndirectRef intFoundPos
+					'=0a'
+					:IndirectRef strValue
+					:IndirectRef intFoundPos
+				)
+				
+				:SetVariable(strDestination "Will navigate to: ")
+				:Append(strDestination :IndirectRef strURL)
+				
+				:Activate(lnkAddKeyToDestination)
+				:TestVariable(strKey != :GOctetString "")
+				
+				:SetData(txtDestination :IndirectRef strDestination)
+				
+			)
+		}
+		
+		{:Link lnkAddKeyToDestination
+			:InitiallyActive False
+			:EventSource strKey
+			:EventType TestEvent
+			:EventData True
+			:LinkEffect
+			(
+				:Deactivate(lnkAddKeyToDestination)
+				:Append(strDestination "?")
+				:Append(strDestination :IndirectRef strKey)
+				:Append(strDestination "=")
+				:Append(strDestination :IndirectRef strValue)
+			)
+		}
 		
 		{:Link lnkExecuteApL
 			:EventSource 0
@@ -12,12 +89,47 @@
 			:EventData KeySelect
 			:LinkEffect
 			(
+				:Activate(lnkExecuteWithKey)
+				:Activate(lnkExecuteWithoutKey)
+				:TestVariable(strKey != :GOctetString "")
+			)
+		}
+		
+		{:Link lnkExecuteWithKey
+			:InitiallyActive False
+			:EventSource strKey
+			:EventType TestEvent
+			:EventData True
+			:LinkEffect
+			(
+				:Deactivate(lnkExecuteWithKey)
+				
 				:Call
 				(
 					app#prgApplicationLaunch
 					app#boolResult
-					"http://www.google.co.uk"
-					"q" "MHEG ApL test succeeded!"
+					:IndirectRef strURL
+					:IndirectRef strKey
+					:IndirectRef strValue
+					:IndirectRef boolApLSuccess
+				)
+			)
+		}
+		
+		{:Link lnkExecuteWithoutKey
+			:InitiallyActive False
+			:EventSource strKey
+			:EventType TestEvent
+			:EventData False
+			:LinkEffect
+			(
+				:Deactivate(lnkExecuteWithoutKey)
+				
+				:Call
+				(
+					app#prgApplicationLaunch
+					app#boolResult
+					:IndirectRef strURL
 					:IndirectRef boolApLSuccess
 				)
 			)
